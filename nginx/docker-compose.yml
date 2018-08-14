@@ -1,0 +1,51 @@
+version: '3'
+
+services:
+  nginx:
+    build:
+      context: ./nginx
+    image: buba-conteh-nginx:v-1.0
+    ports:
+      - "9092:9092"
+      - "8087:80"
+    expose:
+      - "80"
+    networks:
+      - core
+    restart: always
+
+
+  frontend-1:
+    build:
+      context: ./frontend-1
+    image: buba-conteh-frontend-1:v-1.0
+    depends_on:
+      - nginx
+    networks:
+      - core
+    restart: always
+
+  frontend-2:
+    build:
+      context: ./frontend-2
+    image: buba-conteh-frontend-2:v-1.0
+    depends_on:
+      - nginx
+    networks:
+      - core
+    restart: always
+
+  frontend-3:
+    build:
+      context: ./frontend-3
+    image: buba-conteh-frontend-3:v-1.0
+    depends_on:
+      - nginx
+    networks:
+      - core
+    restart: always
+
+networks:
+  core:
+    external:
+      name: core
